@@ -3,23 +3,38 @@ import Header from './Header';
 import ProductList from './ProductList';
 import Cart from './Cart';
 import Footer from './Footer';
-import productsData from '../data/products';
 import { Link } from 'react-router-dom';
 
 const Productpage = () => {
   const [cartItems, setCartItems] = useState([]);
+  const [productsData, setProductsData] = useState([]);
+
 
   // Load cart items from localStorage on component mount
   useEffect(() => {
     const storedCartItems = localStorage.getItem('cartItems');
     if (storedCartItems) {
-      console.log("Loaded cart items from localStorage:", storedCartItems);
-      console.log("Loaded cart items in JSON", JSON.parse (storedCartItems));
       setCartItems(JSON.parse(storedCartItems));
   
     }
   }, []); 
 
+  // Fetch product data from Flask API
+  useEffect(() => {
+    fetch('/products')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Failed to fetch products');
+        }
+        return response.json();
+      })
+      .then(data => {
+        setProductsData(data);
+      })
+      .catch(error => {
+        console.error('Error fetching products:', error);
+      });
+  }, []);
   
   useEffect(() => {
     console.log("Productpage component rerendered");

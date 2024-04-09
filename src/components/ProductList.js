@@ -1,11 +1,12 @@
 // ProductList.js
 import React, { useState, useEffect } from 'react';
+import Product from './Product'
 
-const ProductList = () => {
+const ProductList = ({ onAddToCart }) => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:5000/products')
+    fetch('http://localhost:3000/products')
       .then(response => response.json())
       .then(data => setProducts(data));
   }, []);

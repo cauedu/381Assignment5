@@ -6,7 +6,7 @@ const SignupForm = ({ switchForm }) => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [email, setEmail] = useState('');
 
-  const handleSignup = () => {
+  const handleSignup = async () => {
     if (username.trim() === '' || password.trim() === '' || confirmPassword.trim() === '' || email.trim() === '') {
       alert('Please fill in all fields');
       return;
@@ -15,8 +15,31 @@ const SignupForm = ({ switchForm }) => {
       alert('Passwords do not match');
       return;
     }
-    // Handle signup logic here
-    console.log('Signed up with:', { username, password, email });
+
+    try {
+      const response = await fetch('/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username,
+          password,
+          email,
+        }),
+      });
+      
+      if (response.ok) {
+        console.log('User registered successfully');
+        // You can redirect the user or perform any other action here upon successful signup
+      } else {
+        const errorData = await response.json();
+        alert(errorData.error || 'Failed to register user');
+      }
+    } catch (error) {
+      console.error('Error registering user:', error);
+      alert('Failed to register user. Please try again later.');
+    }
   };
 
   return (
