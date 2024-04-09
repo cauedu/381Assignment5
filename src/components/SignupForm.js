@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const SignupForm = ({ switchForm }) => {
   const [username, setUsername] = useState('');
@@ -17,7 +18,7 @@ const SignupForm = ({ switchForm }) => {
     }
 
     try {
-      const response = await fetch('/register', {
+      const response = await fetch('https://localhost:5000/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -72,7 +73,9 @@ const SignupForm = ({ switchForm }) => {
         />
         <button type="submit">Signup</button>
       </form>
-      <button onClick={switchForm}>Switch to Login</button>
+      <Link to="/login">
+        <button onClick={switchForm}>Switch to Login</button>
+      </Link>
     </div>
   );
 };

@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import Header from './Header';
-import LoginForm from './LoginForm'
 import SignupForm from './SignupForm'
 import Footer from './Footer';
 
-const LoginPage = () => {
-    const [isLoginForm, setIsLoginForm] = useState(true)
+const SignUpPage = () => {
+    const [isLoginForm, setIsLoginForm] = useState(false)
 
     const switchForm = () => {
         setIsLoginForm(prevState => !prevState)
@@ -20,4 +19,4 @@ const LoginPage = () => {
     );
 };
 
-export default LoginPage;
+export default SignUpPage;
