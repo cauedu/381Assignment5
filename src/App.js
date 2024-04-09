@@ -8,6 +8,9 @@ import PrivateRoute from './components/PrivateRoute';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const PrivateRoute = ({ auth: { isLoggedIn }}) => {
+    return isLoggedIn ? <Productpage /> : <Navigate to="/login" />;
+  };
 
   return (
     <Router>
@@ -16,7 +19,7 @@ const App = () => {
           <Route path="/login" element={<LoginPage setIsLoggedIn={setIsLoggedIn} />} />
           <Route path="/register" element={<SignUpPage />} />
           {/* Use PrivateRoute for the ProductPage */}
-          <Route path="/products" element={<Productpage />} />
+          <Route path="/products" element={<PrivateRoute auth={{ isLoggedIn }} />} />
           <Route path="/" element={<Homepage />} />
         </Routes>
       </div>
